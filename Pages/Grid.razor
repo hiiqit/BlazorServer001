@@ -1,0 +1,51 @@
+﻿@using BlazorServer001.Data;
+
+
+@if (Items != null)
+{
+    <div class="table-responsive">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Items)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Age</td>
+                        <td>@item.Email</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <Pager CurrentPage="currentPage" PageSize="PageSize" TotalItemsCount="ItemsCount" OnPageChange="HandlePageChange"></Pager>
+}
+
+@code {
+    [Parameter]
+    public List<Person> Items { get; set; }
+
+    [Parameter]
+    public int PageSize { get; set; }
+
+    [Parameter]
+    public int ItemsCount { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnPageChange { get; set; }
+
+    int currentPage = 1;
+
+    Task HandlePageChange(int page)
+    {
+        currentPage = page;
+        return OnPageChange.InvokeAsync(page);
+    }
+}

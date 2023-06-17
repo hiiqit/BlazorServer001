@@ -1,0 +1,54 @@
+﻿@page "/"
+@using BlazorServer001.Services
+@using BlazorServer001.Data
+
+<h3>Person List</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="horizontal-menu">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Menu Item 1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Menu Item 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Menu Item 3</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <Grid PageSize="@pageSize" Items="persons" ItemsCount="totalItemsCount" OnPageChange="@((int page) => LoadPersons(page, pageSize))"></Grid>
+        </div>
+    </div>
+</div>
+
+@code {
+    List<Person> persons;
+    int totalItemsCount;
+    int pageSize;
+    int initialPage;
+
+    [Inject]
+    PersonService personService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        pageSize = 10;
+        initialPage = 1;
+        LoadPersons(initialPage, pageSize);
+    }
+
+    protected void LoadPersons(int page, int pageSize)
+    {
+        var result = personService.GetPersons(page, pageSize);
+        persons = result.Items;
+        totalItemsCount = result.TotalCount;
+    }
+}

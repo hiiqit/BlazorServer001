@@ -1,0 +1,34 @@
+﻿<div class="pagination">
+    <ul class="pagination justify-content-start flex-wrap">
+        <!-- Display page links in multiple rows -->
+        @for (int i = 1; i <= TotalPages; i++)
+        {
+            var currentPage = i;
+            var isActive = currentPage == CurrentPage;
+            <li class="page-item @(isActive ? "active" : "")">
+                <a class="page-link" href="#" @onclick="() => ChangePage(currentPage)">@(currentPage)</a>
+            </li>
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter]
+    public int CurrentPage { get; set; }
+
+    [Parameter]
+    public int PageSize { get; set; }
+
+    [Parameter]
+    public int TotalItemsCount { get; set; }
+
+    private int TotalPages => (int)Math.Ceiling(TotalItemsCount / (double)PageSize);
+
+    [Parameter]
+    public EventCallback<int> OnPageChange { get; set; }
+
+    private async Task ChangePage(int page)
+    {
+        await OnPageChange.InvokeAsync(page);
+    }
+}
