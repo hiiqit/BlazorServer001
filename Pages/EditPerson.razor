@@ -1,0 +1,39 @@
+﻿<!-- EditPerson.razor -->
+@inject BlazorServer001.Services.PersonService personService
+@page "/editperson/{PersonId:int}"
+@using BlazorServer001.Models
+
+
+<h3>Edit Person</h3>
+
+<div>
+    <label for="name">Name:</label>
+    <input id="name" type="text" @bind="@Person.Name" />
+</div>
+<div>
+    <label for="age">Age:</label>
+    <input id="age" type="number" @bind="@Person.Age" />
+</div>
+<div>
+    <label for="email">Email:</label>
+    <input id="email" type="email" @bind="@Person.Email" />
+</div>
+<button class="btn btn-primary" @onclick="SavePerson">Save</button>
+
+@code {
+    [Parameter]
+    public int PersonId { get; set; }
+
+    private Person Person { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // Initialize Person with default data or retrieve it from a data source
+        Person =  personService.GetPersonById(PersonId);
+    }
+
+    private void SavePerson()
+    {
+        
+    }
+}

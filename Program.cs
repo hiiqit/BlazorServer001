@@ -1,4 +1,4 @@
-using BlazorServer001.Data;
+using BlazorServer001.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using BlazorServer001.Services;

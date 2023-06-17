@@ -1,4 +1,6 @@
-﻿@using BlazorServer001.Data;
+﻿@using Microsoft.AspNetCore.Components;
+@using BlazorServer001.Models;
+
 
 
 @if (Items != null)
@@ -7,18 +9,16 @@
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Email</th>
+                    <th>Person's record</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Items)
                 {
                     <tr>
-                        <td>@item.Name</td>
-                        <td>@item.Age</td>
-                        <td>@item.Email</td>
+                        <td>
+                            <PersonRow Person="item" />
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -48,4 +48,5 @@
         currentPage = page;
         return OnPageChange.InvokeAsync(page);
     }
+
 }

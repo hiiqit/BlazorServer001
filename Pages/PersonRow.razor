@@ -1,0 +1,49 @@
+﻿<!-- PersonRow.razor -->
+@inject NavigationManager NavigationManager
+@inject BlazorServer001.Services.PersonService personService
+@using Microsoft.AspNetCore.Components;
+@using BlazorServer001.Services
+@using BlazorServer001.Models
+
+<div class="person-card">
+    <div>
+        <strong>Name:</strong> @Person.Name
+    </div>
+    <div>
+        <strong>Age:</strong> @Person.Age
+    </div>
+    <div>
+        <strong>Email:</strong> @Person.Email
+    </div>
+    <div>
+        <strong>
+            <span style="font-size: larger;">ID:</span> @Person.Id
+        </strong>
+    </div>
+    <button class="btn btn-primary btn-sm edit-button" @onclick="() => EditPerson(Person.Id)">Edit</button>
+
+</div>
+
+
+@code {
+    [Parameter]
+    public Person Person { get; set; }
+
+
+    private void EditPerson(int id)
+    {
+        NavigationManager.NavigateTo($"/editperson/{id}");
+    }
+
+    protected override void OnInitialized()
+    {
+        string stringId = NavigationManager.Uri.Split('/').Last();
+        if (!string.IsNullOrEmpty(stringId) && stringId!="#")
+        {
+            var personId = Convert.ToInt32(stringId);
+            Person = personService.GetPersonById(personId);
+        }
+    }
+
+
+}

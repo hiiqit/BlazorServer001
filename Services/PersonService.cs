@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BlazorServer001.Data;
+using BlazorServer001.Models;
 
 namespace BlazorServer001.Services
 {

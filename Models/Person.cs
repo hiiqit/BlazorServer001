@@ -1,4 +1,4 @@
-﻿namespace BlazorServer001.Data
+﻿namespace BlazorServer001.Models
 {
     public class Person
     {
